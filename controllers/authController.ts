@@ -6,7 +6,7 @@ import { AuthRequest } from '../middleware/authMiddleware';
 import { sendEmail } from '../helper/sendEmail';
 import { resetPasswordTemplate } from '../emailTemplates';
 
-const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
+const FRONTEND_URL = process.env.FRONTEND_URL ||  'http://localhost:5173';
 
 /* REGISTER */
 export const register = async (req: Request, res: Response) => {
