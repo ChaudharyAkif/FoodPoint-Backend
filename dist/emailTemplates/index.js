@@ -1,0 +1,1 @@
+export { resetPasswordTemplate } from "./resetPassword";
