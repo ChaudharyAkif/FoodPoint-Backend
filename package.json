@@ -6,8 +6,7 @@
     "start": "ts-node server.ts",
     "server": "nodemon server.ts",
     "client": "cd ../frontend && npm run dev",
-    "build": "tsc",
-    "dev": "ts-node api/server.ts"
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",

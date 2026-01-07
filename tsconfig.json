@@ -1,13 +1,11 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "ESNext",
-    "moduleResolution": "Node",
+    "target": "ES6",
+    "module": "CommonJS",
+    "rootDir": "./",
     "outDir": "dist",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "skipLibCheck": true
-  },
-  "include": ["./**/*.ts"]
+    "esModuleInterop": true,
+    "moduleResolution": "node"
+  }
 }

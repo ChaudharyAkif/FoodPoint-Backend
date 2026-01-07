@@ -2,8 +2,6 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import helmet from "helmet";
-import serverless from "serverless-http";
-
 import { connectDB } from "./config/db";
 import AuthRoutes from "./routes/authRoutes";
 import { sendResponse } from "./middleware/responseMiddleware";
@@ -15,32 +13,45 @@ import orderRoutes from "./routes/orderRoutes";
 
 dotenv.config();
 const app = express();
+const PORT = process.env.PORT || 2000; 
 
-// Middleware
+// 1. CORS: Allow both ports (5173 & 5174) just in case
 app.use(cors());
+
+
 const isProduction = process.env.NODE_ENV === "production";
+
 app.use(
   helmet({
-    contentSecurityPolicy: isProduction,
+    contentSecurityPolicy: isProduction, 
   })
 );
-app.use(express.json({ limit: "50mb" }));
-app.use(express.urlencoded({ limit: "50mb", extended: true }));
+
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(sendResponse);
 
-// Routes
 app.get("/", (_req, res) => {
-  res.send("🚀 Server running with MongoDB (serverless)");
+  res.send("🚀 Server running with MongoDB");
 });
+
 app.use("/api/auth", AuthRoutes);
-app.use("/api/products", productRoutes);
-app.use("/api/deals", dealRoutes);
-app.use("/api/options", optionRoutes);
-app.use("/api/option-groups", optionGroupRoutes);
-app.use("/api/orders", orderRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/deals', dealRoutes);
+app.use('/api/options', optionRoutes);
+app.use('/api/option-groups', optionGroupRoutes);
+app.use('/api/orders', orderRoutes);
 
-// Connect to MongoDB once (serverless safe)
-connectDB().then(() => console.log("✅ MongoDB connected"));
+const startServer = async () => {
+  try {
+     await connectDB();
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on http://localhost:${PORT}`);
+    });
+  } catch (error) {
+    console.error("❌ Server not started due to DB error");
+    process.exit(1);
+  }
+};
 
-// Export app wrapped in serverless handler
-export const handler = serverless(app);
+startServer();
