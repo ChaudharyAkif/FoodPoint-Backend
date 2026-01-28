@@ -6,7 +6,8 @@
     "start": "ts-node server.ts",
     "server": "nodemon server.ts",
     "client": "cd ../frontend && npm run dev",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "vercel-start": "node index.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
